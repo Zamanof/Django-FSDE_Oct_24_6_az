@@ -1,4 +1,4 @@
-number = 5
+number = "55"
 
-print(int(number))
-print(bool(number))
+print(int(number))  # 5
+print(bool(number)) # True
