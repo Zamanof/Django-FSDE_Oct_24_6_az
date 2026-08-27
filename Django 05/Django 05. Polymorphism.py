@@ -1,6 +1,3 @@
-# C++       -> Parent class, Child class
-# C#        -> Base class, Derived class
-# Python    -> Super class, Subclass
 class Human:
     foo = "Salam"
     def __init__(self, name, surname, age):
@@ -24,19 +21,30 @@ class Student(Human):
         super().__init__(name, surname, age)
         self.group = group
 
-
-# print(Human.get_foo_class_method())     # Salam
-# print(Human.get_foo_static_method())    # Salam
-# Student.foo = "Hi"
-# print(Student.get_foo_static_method())    # Salam
-# print(Student.get_foo_class_method())     # Salam
+    def get_info(self):
+        return f"{super().get_info()}. \nGroup: {self.group}"
 
 
-human = Human("Nadir", "Zamanov", 45)
+class Foo:
+    def get_info(self):
+        return "Foo"
 
-student = Student("Salam", "Zamanov", 45, "group 1")
 
-# print(isinstance(student, Student))
-# print(isinstance(student, Human))
-# print(isinstance(student, object))
+class Other:
+    def get_info(self):
+        return "Other"
 
+
+student = Student("Ali", "Aliyev", 24, "FBMS_2_11")
+human = Human("Vali", "Valiev", 30)
+foo = Foo()
+other = Other()
+
+lst = [student, human, foo, other]
+
+for item in lst:
+    print(item.get_info())
+    print()
+
+
+# duck typing
