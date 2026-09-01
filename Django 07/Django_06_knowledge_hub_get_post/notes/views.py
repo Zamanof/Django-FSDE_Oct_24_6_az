@@ -1,8 +1,13 @@
+from typing import Any
+
 from django.http import HttpResponse, HttpRequest
 from django.urls import reverse
 from django.utils.html import escape
 
 from . import data
+
+
+
 def home(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Knowledge Hub Home Page")
 
@@ -10,13 +15,23 @@ def about(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Knowledge Hub About Page")
 
 def notes_list(request: HttpRequest) -> HttpResponse:
+    raw_tag = request.GET.get('tag')
+    raw_category = request.GET.get('category')
     items:list[str] = []
-    for note in data.list_notes():
+    notes:list[dict[str, Any]] = data.list_notes()
+    if raw_tag:
+        tag_filter = raw_tag.strip()
+        notes = [n for n in notes if n['tag'] == tag_filter]
+    if raw_category:
+        category_filter = raw_category.strip()
+        notes = [n for n in notes if n['category'] == category_filter]
+
+    for note in notes:
         url = reverse('note_detail', kwargs={"note_id": note['id']})
         items.append(f"""
         <li>
             <a href="{escape(url)}">
-                    {escape(note['title'])}
+                    {escape(note['title'])} ({escape(note['tag'])})
             </a>
         </li>
 """)
@@ -49,5 +64,5 @@ def note_detail(request: HttpRequest, note_id: int) -> HttpResponse:
     return HttpResponse(body)
 
 
-
+# Query string
 
