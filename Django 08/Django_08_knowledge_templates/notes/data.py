@@ -1,44 +1,48 @@
 from copy import deepcopy
+from datetime import datetime
 from typing import Any
 
-from django.http import HttpRequest
-from unicodedata import category
 
-_NOTES:list[dict[str:Any]] = [
+_NOTES: list[dict[str, Any]] = [
     {
         'id': 1,
         'title': "Django Views",
-        'body': 'View request qəbul edir və response qaytarır.',
-        'tag': 'django',
-        'category': 'backend'
+        'content': 'View request qəbul edir və response qaytarır.',
+        'tags': ['django', 'python', 'views'],
+        'category': 'backend',
+        'created_at': datetime(2026, 8, 15, 10, 30),
     },
     {
         'id': 2,
         'title': "Django Models",
-        'body': 'Models məlumat bazası ilə işləmək üçün istifadə olunur.',
-        'tag': 'django',
-        'category': 'database'
+        'content': 'Models məlumat bazası ilə işləmək üçün istifadə olunur.',
+        'tags': ['django', 'python', 'models', 'database', 'orm'],
+        'category': 'database',
+        'created_at': datetime(2026, 8, 18, 14, 45),
     },
     {
         'id': 3,
         'title': "Django Templates",
-        'body': 'Templates HTML səhifələrinin yaradılması üçün istifadə olunur.',
-        'tag': 'html',
-        'category': 'frontend'
+        'content': 'Templates HTML səhifələrinin yaradılması üçün istifadə olunur.',
+        'tags': ['django', 'html', 'templates', 'frontend'],
+        'category': 'frontend',
+        'created_at': datetime(2026, 8, 21, 9, 15),
     },
     {
         'id': 4,
         'title': "Django URLs",
-        'body': 'URLs sorğuları uyğun view funksiyalarına yönləndirir.',
-        'tag': 'django',
-        'category': 'backend'
+        'content': 'URLs sorğuları uyğun view funksiyalarına yönləndirir.',
+        'tags': ['django', 'urls'],
+        'category': 'backend',
+        'created_at': datetime(2026, 8, 25, 16, 20),
     },
     {
         'id': 5,
         'title': "Python Functions",
-        'body': 'Functions kodu təkrar istifadə etmək üçün qruplaşdırmağa imkan verir.',
-        'tag': 'python',
-        'category': 'programming'
+        'content': 'Functions kodu təkrar istifadə etmək üçün qruplaşdırmağa imkan verir.',
+        'tags': ['python', 'functions', 'programming', 'backend', 'code', 'development'],
+        'category': 'programming',
+        'created_at': datetime(2026, 8, 29, 11, 50),
     }
 ]
 
@@ -55,14 +59,16 @@ def get_note(note_id: int) -> dict[str, Any]|None:
     return None
 
 
-def create_note(*, title: str, body: str, tag: str, category: str) -> dict[str, Any]:
+def create_note(*, title: str, content: str, tags: list[str], category: str) -> dict[str, Any]:
     global _next_id
     note = {
         'id': _next_id,
         'title': title.strip(),
-        'body': body.strip(),
-        'tag': tag.strip(),
-        'category': category.strip()
+        'content': content.strip(),
+        'tags': tags,
+        'category': category.strip(),
+        'created_at': datetime.now(),
+
     }
     _NOTES.append(note)
     _next_id += 1
@@ -73,15 +79,15 @@ def update_note(
         note_id:int,
         *,
         title: str,
-        body: str,
-        tag: str,
+        content: str,
+        tags:list[str],
         category: str,
 ) -> dict[str, Any]|None:
     for note in _NOTES:
         if note['id'] == note_id:
             note['title'] = title.strip()
-            note['body'] = body.strip()
-            note['tag'] = tag.strip()
+            note['content'] = content.strip()
+            note['tags'] = tags
             note['category'] = category.strip()
             return deepcopy(note)
     return None

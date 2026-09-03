@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Qeydlər
+{% endblock %}
+
+{% block content %}
+<h1>Knowledge Hub Notes</h1>
+        {% with notes|length as count %}
+        <p>
+            Bütün qeydləriniz: {{ count }} ədəd
+        </p>
+        {% endwith %}
+        <ul>
+            {% for note in notes %}
+                 <a href="{% url 'note_detail' note.id %}">
+                    {{ note.title }}
+                    <span class="tag">
+                        {{ note.tags }}
+                    </span>
+                </a>
+
+            {% empty %}
+
+                <h3>Göstərmək üçün heç bir qeyd yoxdur</h3>
+
+            {% endfor %}
+
+        </ul>
+
+        <a
+            class="button"
+            href="{% url 'home' %}"
+        >
+            ← Ana səhifəyə qayıt
+        </a>
+{% endblock %}

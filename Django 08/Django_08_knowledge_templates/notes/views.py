@@ -567,91 +567,16 @@ def home(request: HttpRequest) -> HttpResponse:
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    body = """
-        <h1>Knowledge Hub layihəsi haqqında</h1>
-
-        <p>
-            Bu layihədə öz qeydlərinizi yarada və idarə edə bilərsiniz.
-        </p>
-
-        <p>
-            Qeydləri kateqoriya və tag-lərə əsasən təşkil etmək mümkündür.
-        </p>
-    """
-
-    return HttpResponse(
-        _html_shell("Haqqında", body)
-    )
+    context = {
+        'project_name':'Knowledge Hub',
+        'author':'Nadir Zamanov',
+    }
+    return render(request, 'notes/about.html', context)
 
 
 def notes_list(request: HttpRequest) -> HttpResponse:
-    raw_tag = request.GET.get('tag')
-    raw_category = request.GET.get('category')
-
-    items: list[str] = []
-
-    notes: list[dict[str, Any]] = data.list_notes()
-
-    if raw_tag:
-        tag_filter = raw_tag.strip()
-
-        notes = [
-            n for n in notes
-            if n['tag'] == tag_filter
-        ]
-
-    if raw_category:
-        category_filter = raw_category.strip()
-
-        notes = [
-            n for n in notes
-            if n['category'] == category_filter
-        ]
-
-    for note in notes:
-        url = reverse(
-            'note_detail',
-            kwargs={"note_id": note['id']}
-        )
-
-        items.append(
-            f"""
-            <li>
-                <a href="{escape(url)}">
-
-                    {escape(note['title'])}
-
-                    <span class="tag">
-                        #{escape(note['tag'])}
-                    </span>
-
-                </a>
-            </li>
-            """
-        )
-
-    body = f"""
-        <h1>Knowledge Hub Notes</h1>
-
-        <p>
-            Bütün qeydləriniz
-        </p>
-
-        <ul>
-            {''.join(items)}
-        </ul>
-
-        <a
-            class="button"
-            href="{escape(reverse('home'))}"
-        >
-            ← Ana səhifəyə qayıt
-        </a>
-    """
-
-    return HttpResponse(
-        _html_shell("Qeydlər", body)
-    )
+    notes = data.list_notes()
+    return render(request, 'notes/notes_list.html', {'notes': notes})
 
 
 def note_detail(
@@ -660,68 +585,7 @@ def note_detail(
 ) -> HttpResponse:
 
     note = data.get_note(note_id)
-
-    if note is None:
-        return HttpResponse(
-            f"Note id={note_id} not found"
-        )
-
-    body = f"""
-        <h1>
-            {escape(note['title'])}
-        </h1>
-
-        <div class="note-info">
-
-            <p>
-                <strong>Mətn</strong>
-                <br>
-
-                {escape(note['body'])}
-            </p>
-
-            <p>
-                <strong>Tag</strong>
-                <br>
-
-                #{escape(note['tag'])}
-            </p>
-
-            <p>
-                <strong>Kateqoriya</strong>
-                <br>
-
-                {escape(note['category'])}
-            </p>
-
-        </div>
-
-        <p>
-            </p>
-        <a
-            class="button"
-            href="{escape(reverse('note_edit', kwargs={'note_id': note_id}))}"
-        >
-            Dəyiş
-        </a>
-        <a
-            class="button"
-            href="{escape(reverse('note_delete', kwargs={'note_id': note_id}))}"
-        >
-            Sil
-        </a>
-        </p>
-        <a
-            class="button"
-            href="{escape(reverse('notes_list'))}"
-        >
-            ← Qeydlər siyahısına qayıt
-        </a>
-    """
-
-    return HttpResponse(
-        _html_shell(note['title'], body)
-    )
+    return render(request, 'notes/note_detail.html', {'note': note})
 
 
 def note_create(request: HttpRequest) -> HttpResponse:
