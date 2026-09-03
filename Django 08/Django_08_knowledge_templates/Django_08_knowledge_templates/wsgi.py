@@ -1,5 +1,5 @@
 """
-WSGI config for Django_06_knowledge_templates project.
+WSGI config for Django_08_knowledge_templates project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Django_06_knowledge_templates.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Django_08_knowledge_templates.settings')
 
 application = get_wsgi_application()
