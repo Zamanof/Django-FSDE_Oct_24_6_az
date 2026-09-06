@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ note.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>
+            Yeni qeyd yarat
+        </h1>
+
+        <p class="form-description">
+            Yeni qeydin məlumatlarını daxil edin.
+        </p>
+
+
+        <form
+            method="post"
+            class="note-form"
+        >
+        {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    Ad
+                </label>
+
+                <input
+                    id="title"
+                    type="text"
+                    name="title"
+                    value="{{ title }}"
+                    placeholder="Qeydin adını daxil edin"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="body">
+                    Mətn
+                </label>
+
+                <textarea
+                    id="body"
+                    name="body"
+                    rows="6"
+                    placeholder="Qeydinizin mətnini bura yazın"
+                >{{ content }}</textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="tag">
+                    Tag
+                </label>
+
+                <input
+                    id="tag"
+                    type="text"
+                    name="tag"
+                    value="{{ tags }}"
+                    placeholder="Məsələn: django"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="category">
+                    Kateqoriya
+                </label>
+
+                <input
+                    id="category"
+                    type="text"
+                    name="category"
+                    value="{{ category }}"
+                    placeholder="Məsələn: Backend"
+                >
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    Qeyd yarat
+                </button>
+
+
+                <a
+                    href=""
+                    class="cancel-button"
+                >
+                    Ləğv et
+                </a>
+
+            </div>
+
+        </form>
+{% endblock %}

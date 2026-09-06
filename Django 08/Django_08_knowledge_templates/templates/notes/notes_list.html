@@ -16,7 +16,7 @@
                  <a href="{% url 'note_detail' note.id %}">
                     {{ note.title }}
                     <span class="tag">
-                        {{ note.tags }}
+                        {{ note.tags|join:' ' }}
                     </span>
                 </a>
 

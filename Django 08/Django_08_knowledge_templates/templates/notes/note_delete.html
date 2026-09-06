@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Qeydlər
+{% endblock %}
+
+{% block content %}
+<h1>Qeydin silinməsi</h1>
+    <form method="post">
+    {% csrf_token %}
+        <button class="button" type="submit">Sil</button>
+        <a
+                    class="button"
+                    href="{% url 'notes_list' %}"
+                >
+                    Ləğv et
+                </a>
+    </form>
+{% endblock %}
