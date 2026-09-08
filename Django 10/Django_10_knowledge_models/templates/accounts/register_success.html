@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Success
+{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body text-center py-5">
+            <div class="display-6 text-secondary mb-3">
+                <i class="bi bi-check-lg"></i>
+            </div>
+            <h1>Qeydiyyat uğurla tamamlandı</h1>
+            <p class="text-secondary mb-4">İndi qeydlərinizi yaratmağa başlaya bilərsiniz.</p>
+            <a class="btn btn-primary" href="{% url 'accounts:login' %}">Daxil ol</a>
+        </div>
+    </div>
+{% endblock %}

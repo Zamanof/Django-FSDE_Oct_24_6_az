@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Haqqında
+{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body p-4">
+    <span class="badge rounded-pill badge-kicker mb-3">
+        <i class="bi bi-info-circle"></i>
+        Haqqında
+    </span>
+    <h1>{{ project_name }} layihəsi haqqında</h1>
+
+        <p class="text-secondary">
+            Bu layihədə öz qeydlərinizi yarada və idarə edə bilərsiniz.
+        </p>
+
+        <p class="text-secondary">
+            Qeydləri kateqoriya və tag-lərə əsasən təşkil etmək mümkündür.
+        </p>
+        <p class="text-secondary mb-0">
+            Layihə müəllifi: <strong class="text-dark">{{ author }}</strong>
+        </p>
+    </div>
+</div>
+{% endblock %}

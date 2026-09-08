@@ -1,0 +1,222 @@
+:root {
+    --ink: #1a1612;
+    --cream: #fff8f0;
+    --copper: #c4622d;
+    --copper-deep: #9a4520;
+    --olive: #3d5345;
+    --sand: #e4d6c4;
+    --mist: #6f675c;
+
+    --bs-primary: #c4622d;
+    --bs-primary-rgb: 196, 98, 45;
+    --bs-secondary: #3d5345;
+    --bs-secondary-rgb: 61, 83, 69;
+    --bs-danger: #8f2d24;
+    --bs-danger-rgb: 143, 45, 36;
+    --bs-body-bg: #f3ebe1;
+    --bs-body-color: #1a1612;
+    --bs-body-font-family: "Outfit", system-ui, sans-serif;
+    --bs-link-color: #c4622d;
+    --bs-link-hover-color: #9a4520;
+    --bs-border-color: #e4d6c4;
+    --bs-border-radius: 0.9rem;
+    --bs-nav-link-hover-color: #fff8f0;
+}
+
+body {
+    font-family: var(--bs-body-font-family);
+    background:
+        radial-gradient(ellipse 70% 45% at 8% -8%, rgba(196, 98, 45, 0.16), transparent 55%),
+        radial-gradient(ellipse 55% 40% at 100% 0%, rgba(61, 83, 69, 0.14), transparent 50%),
+        #f3ebe1;
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: "Fraunces", Georgia, serif;
+}
+
+.navbar {
+    background-color: var(--ink);
+}
+
+.navbar .nav-link {
+    padding-bottom: 0.2rem;
+}
+
+.navbar .nav-link.active {
+    color: #fff8f0;
+    background: none;
+}
+
+.navbar .nav-link.active::after {
+    content: "";
+    display: block;
+    height: 4px;
+    margin-top: 0.12rem;
+    background: var(--copper-deep);
+}
+
+.navbar-logo {
+    height: 44px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    mix-blend-mode: lighten;
+}
+
+.card {
+    background: var(--cream);
+    border-color: var(--sand);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--copper);
+    --bs-btn-border-color: var(--copper);
+    --bs-btn-hover-bg: var(--copper-deep);
+    --bs-btn-hover-border-color: var(--copper-deep);
+    --bs-btn-active-bg: var(--copper-deep);
+    --bs-btn-active-border-color: var(--copper-deep);
+    --bs-btn-disabled-bg: var(--copper);
+    --bs-btn-disabled-border-color: var(--copper);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--ink);
+    --bs-btn-border-color: var(--sand);
+    --bs-btn-hover-bg: #f4ebe0;
+    --bs-btn-hover-border-color: #d7c7b2;
+    --bs-btn-hover-color: var(--ink);
+}
+
+.btn-danger {
+    --bs-btn-bg: var(--bs-danger);
+    --bs-btn-border-color: var(--bs-danger);
+    --bs-btn-hover-bg: #74241d;
+    --bs-btn-hover-border-color: #74241d;
+}
+
+.badge-kicker {
+    background: rgba(196, 98, 45, 0.14);
+    color: var(--copper-deep);
+}
+
+.hero-side,
+.auth-side {
+    background: linear-gradient(160deg, #3d5345, #1a1612);
+    color: var(--cream);
+}
+
+.hero-side {
+    position: relative;
+    min-height: 280px;
+    overflow: hidden;
+}
+
+.hero-logo {
+    position: absolute;
+    top: 4.6rem;
+    left: auto;
+    right: 18%;
+    transform: rotate(10deg);
+    width: min(87%, 330px);
+    height: auto;
+    opacity: 0.09;
+    mix-blend-mode: lighten;
+    pointer-events: none;
+    user-select: none;
+}
+
+.hero-side h2,
+.hero-side p {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-side h2 {
+    font-size: clamp(2.2rem, 4.5vw, 3.1rem);
+    line-height: 1.05;
+    margin-bottom: 0.45rem;
+}
+
+.hero-side p {
+    font-size: 1.2rem;
+}
+
+.auth-side {
+    background: linear-gradient(165deg, #2c241c, #1a1612);
+}
+
+.hero-side .badge-kicker,
+.auth-side .badge-kicker {
+    background: rgba(255, 248, 240, 0.18);
+    color: #fff8f0;
+}
+
+.note-card {
+    border-left: 4px solid var(--copper);
+    color: var(--ink);
+}
+
+.note-card:hover {
+    border-color: var(--copper);
+    color: var(--ink);
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+form > div,
+.form-group {
+    margin-bottom: 1rem;
+}
+
+form input:not([type="hidden"]):not([type="checkbox"]):not([type="submit"]),
+form textarea,
+form select {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    color: var(--ink);
+    background: #fffdf8;
+    border: 1px solid var(--sand);
+    border-radius: var(--bs-border-radius);
+}
+
+form textarea {
+    min-height: 140px;
+}
+
+form select[multiple] {
+    min-height: 140px;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: 0;
+    border-color: var(--copper);
+    box-shadow: 0 0 0 0.2rem rgba(196, 98, 45, 0.2);
+}
+
+.errorlist {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    border-radius: var(--bs-border-radius);
+    background: rgba(143, 45, 36, 0.08);
+    color: var(--bs-danger);
+}
+
+.helptext {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--mist);
+    font-size: 0.85rem;
+}
