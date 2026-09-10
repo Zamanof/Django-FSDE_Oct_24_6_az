@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.http import HttpResponse, HttpRequest
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpRequest, HttpResponseForbidden
+from django.shortcuts import redirect, render, get_object_or_404
 
-from . import data
 from .forms import NoteForm
 from .models import Note
 
@@ -19,20 +19,28 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, 'notes/about.html', context)
 
 
+@login_required
 def notes_list(request: HttpRequest) -> HttpResponse:
-    notes = Note.objects.select_related('category', 'author').prefetch_related('tags').all()
+    notes = Note.objects.filter(author=request.user).order_by('-created_at')
     return render(request, 'notes/notes_list.html', {'notes': notes})
 
 
+@login_required
 def note_detail(
     request: HttpRequest,
     note_id: int
 ) -> HttpResponse:
 
-    note = data.get_note(note_id)
+    note =  get_object_or_404(
+        Note.objects.select_related('author', 'category').prefetch_related('tags'),
+        pk=note_id
+    )
+    if note.author != request.user:
+        return  HttpResponseForbidden("Siz ancaq öz qeydlərinizi görə bilərsiniz")
     return render(request, 'notes/note_detail.html', {'note': note})
 
 
+@login_required
 def note_create(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = NoteForm(request.POST)
@@ -52,27 +60,32 @@ def note_create(request: HttpRequest) -> HttpResponse:
     })
 
 
+@login_required
 def note_edit(request: HttpRequest, note_id:int) -> HttpResponse:
-    note = data.get_note(note_id)
+    note = get_object_or_404(Note, pk=note_id)
+    if request.user != note.author:
+        return HttpResponseForbidden("Siz ancaq öz qeydlərinizi dəyişə bilərsiniz")
     if request.method == 'POST':
-        title = request.POST.get('title', "")
-        content = request.POST.get('content', "")
-        category = request.POST.get('category', "")
-        tags = request.POST.get('tag')
-        data.update_note(
-            note_id=note_id,
-            title=title.strip(),
-            content=content.strip(),
-            category=category.strip(),
-            tags= tags.split() or None
-        )
-        return redirect('notes_list')
+        form = NoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return redirect('notes:note_detail', note_id=note.pk)
+    else:
+        form = NoteForm(instance=note)
+    return render(request, 'notes/note_edit.html', {'note': note, 'form': form, 'mode': 'edit'})
 
-    return render(request, 'notes/note_edit.html', {'note': note})
 
+@login_required
 def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:
-    note = data.get_note(note_id)
+    note = get_object_or_404(
+        Note, pk=note_id
+    )
+
+    if request.user != note.author:
+        return HttpResponseForbidden("Siz ancaq öz qeydlərinizi silə bilərsiniz")
+
     if request.method == 'POST':
-        data.delete_note(note_id)
-        return redirect('notes_list')
+        note.delete()
+        messages.success(request, "")
+        return redirect('notes:notes_list')
     return render(request, 'notes/note_delete.html', {'note': note})

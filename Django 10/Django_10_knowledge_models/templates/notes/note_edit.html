@@ -5,123 +5,59 @@
 {% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-            <span class="badge rounded-pill badge-kicker mb-3">
-                <i class="bi bi-pencil-square"></i>
-                Redaktə
-            </span>
-            <h1>
-              Yeni qeyd yarat
-          </h1>
- 
-          <p class="text-secondary">
-              Yeni qeydin məlumatlarını daxil edin.
-          </p>
- 
- 
-          <form
-              method="post"
-          >
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                <span class="badge rounded-pill badge-kicker mb-3">
+                    <i class="bi bi-plus-lg"></i>
+                    Yeni qeyd
+                </span>
+                <h1>
+                    Yeni qeyd yarat
+                </h1>
 
-            {% csrf_token %}
+                <p class="text-secondary">
+                    Yeni qeydin məlumatlarını daxil edin.
+                </p>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3">
+                        {{ form.as_div }}
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 mt-3 border-top">
 
-
-              <div class="mb-3">
-
-                  <label class="form-label" for="title">
-                      Ad
-                  </label>
-
-                  <input
-                      id="title"
-                      class="form-control"
-                      type="text"
-                      name="title"
-                      value="{{ note.title }}"
-                      placeholder="Qeydin adını daxil edin"
-                  >
-
-              </div>
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Dəyiş
+                        </button>
 
 
-              <div class="mb-3">
+                        <a
+                            href="{% url 'notes:notes_list' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Ləğv et
+                        </a>
 
-                  <label class="form-label" for="body">
-                      Mətn
-                  </label>
-
-                  <textarea
-                      id="body"
-                      class="form-control"
-                      name="body"
-                      rows="6"
-                      placeholder="Qeydinizin mətnini bura yazın"
-                  >{{ note.content }}</textarea>
-
-              </div>
-
-
-              <div class="mb-3">
-
-                  <label class="form-label" for="tag">
-                      Tag
-                  </label>
-
-                  <input
-                      id="tag"
-                      class="form-control"
-                      type="text"
-                      name="tag"
-                      value="{{ note.tags|join:' ' }}"
-                      placeholder="Məsələn: django"
-                  >
-
-              </div>
-
-
-              <div class="mb-3">
-
-                  <label class="form-label" for="category">
-                      Kateqoriya
-                  </label>
-
-                  <input
-                      id="category"
-                      class="form-control"
-                      type="text"
-                      name="category"
-                      value="{{ note.category }}"
-                      placeholder="Məsələn: Backend"
-                  >
-
-              </div>
-
-
-              <div class="d-flex flex-wrap gap-2 pt-3 mt-3 border-top">
-
-                  <button
-                      type="submit"
-                      class="btn btn-primary"
-                  >
-                      Yadda saxla
-                  </button>
-
-
-                  <a
-                      href="{% url 'notes:notes_list' %}"
-                      class="btn btn-outline-secondary"
-                  >
-                      Ləğv et
-                  </a>
-
-              </div>
-
-          </form>
+                    </div>
+                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+{#    {{ form.as_p }}#}
+
+{#    <ul>#}
+{#        {{ form.as_ul }}#}
+{#    </ul>#}
+
+{#    <table>#}
+{#        {{ form.as_table }}#}
+{#    </table>#}
+
 {% endblock %}
