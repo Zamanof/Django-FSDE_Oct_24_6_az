@@ -22,6 +22,19 @@
 {% include 'navbar.html' %}
 <main class="flex-grow-1">
     <div class="container py-4 py-lg-5">
+        {% if messages %}
+            <div class="flash-messages mb-3">
+                {% for message in messages %}
+                    <div
+                        class="auth-alert {% if 'error' in message.tags %}auth-alert-error{% elif 'success' in message.tags %}auth-alert-success{% else %}auth-alert-info{% endif %}"
+                        role="alert"
+                    >
+                        <i class="bi {% if 'error' in message.tags %}bi-exclamation-circle-fill{% elif 'success' in message.tags %}bi-check-circle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+                        <div>{{ message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}
 
         {% endblock %}

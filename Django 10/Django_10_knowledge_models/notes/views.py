@@ -24,7 +24,12 @@ def notes_list(request: HttpRequest) -> HttpResponse:
     if request.user.is_superuser:
         notes = Note.objects.select_related('author', 'category').prefetch_related('tags')
     else:
-        notes = Note.objects.filter(author=request.user).order_by('-created_at')
+        notes = (
+            Note.objects.filter(author=request.user)
+            .select_related('author', 'category')
+            .prefetch_related('tags')
+            .order_by('-created_at')
+        )
     return render(request, 'notes/notes_list.html', {'notes': notes})
 
 

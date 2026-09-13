@@ -35,17 +35,32 @@
                     </li>
                     <li class="nav-item">
                         <a
-                                class="nav-link{% if ns == 'notes' %} active{% endif %}"
+                                class="nav-link{% if ns == 'notes' and url_name != 'note_create' %} active{% endif %}"
                                 href="{% url 'notes:notes_list' %}"
-                                {% if ns == 'notes' %}aria-current="page"{% endif %}
+                                {% if ns == 'notes' and url_name != 'note_create' %}aria-current="page"{% endif %}
                         >Qeydlər</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <form method="post" action="{% url 'accounts:logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link">Çıxış</button>
-                            </form>
+                            <a
+                                    class="nav-link{% if url_name == 'note_create' %} active{% endif %}"
+                                    href="{% url 'notes:note_create' %}"
+                                    {% if url_name == 'note_create' %}aria-current="page"{% endif %}
+                            >Yeni qeyd yarat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                    class="nav-link{% if url_name == 'dashboard' %} active{% endif %}"
+                                    href="{% url 'accounts:dashboard' %}"
+                                    {% if url_name == 'dashboard' %}aria-current="page"{% endif %}
+                            >Şəxsi kabinet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                    class="nav-link{% if url_name == 'logout' %} active{% endif %}"
+                                    href="{% url 'accounts:logout' %}"
+                                    {% if url_name == 'logout' %}aria-current="page"{% endif %}
+                            >Çıxış</a>
                         </li>
                     {% else %}
                         <li class="nav-item">

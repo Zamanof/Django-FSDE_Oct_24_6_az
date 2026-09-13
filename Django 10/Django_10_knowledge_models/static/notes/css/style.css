@@ -166,6 +166,50 @@ h1, h2, h3, .navbar-brand {
     color: var(--ink);
 }
 
+.note-detail-username {
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+}
+
+.note-detail-date {
+    font-size: 0.9rem;
+    margin-top: 0.15rem;
+}
+
+.note-detail-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.note-detail-meta {
+    font-size: 0.85rem;
+}
+
+.note-detail-meta-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--copper-deep);
+    font-weight: 500;
+}
+
+.note-detail-tags {
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.note-detail-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink);
+}
+
+.note-detail-content p:last-child {
+    margin-bottom: 0;
+}
+
 form label {
     display: block;
     margin-bottom: 0.4rem;
@@ -207,11 +251,59 @@ form select:focus {
 
 .errorlist {
     list-style: none;
-    margin: 0 0 1rem;
-    padding: 0.75rem;
-    border-radius: var(--bs-border-radius);
+    margin: 0.45rem 0 0;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
     background: rgba(143, 45, 36, 0.08);
     color: var(--bs-danger);
+    font-size: 0.9rem;
+}
+
+.has-error input,
+.has-error textarea,
+.has-error select {
+    border-color: var(--bs-danger) !important;
+    box-shadow: 0 0 0 0.15rem rgba(143, 45, 36, 0.12);
+}
+
+.auth-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: 0 0 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--bs-border-radius);
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.flash-messages .auth-alert:last-child {
+    margin-bottom: 0;
+}
+
+.auth-alert i {
+    margin-top: 0.1rem;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.auth-alert-error {
+    background: rgba(143, 45, 36, 0.1);
+    border-color: rgba(143, 45, 36, 0.22);
+    color: #74241d;
+}
+
+.auth-alert-success {
+    background: rgba(61, 83, 69, 0.12);
+    border-color: rgba(61, 83, 69, 0.22);
+    color: var(--olive);
+}
+
+.auth-alert-info {
+    background: rgba(196, 98, 45, 0.1);
+    border-color: rgba(196, 98, 45, 0.2);
+    color: var(--copper-deep);
 }
 
 .helptext {
