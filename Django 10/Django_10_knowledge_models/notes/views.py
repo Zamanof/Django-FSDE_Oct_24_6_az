@@ -21,7 +21,10 @@ def about(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def notes_list(request: HttpRequest) -> HttpResponse:
-    notes = Note.objects.filter(author=request.user).order_by('-created_at')
+    if request.user.is_superuser:
+        notes = Note.objects.select_related('author', 'category').prefetch_related('tags')
+    else:
+        notes = Note.objects.filter(author=request.user).order_by('-created_at')
     return render(request, 'notes/notes_list.html', {'notes': notes})
 
 
@@ -35,7 +38,7 @@ def note_detail(
         Note.objects.select_related('author', 'category').prefetch_related('tags'),
         pk=note_id
     )
-    if note.author != request.user:
+    if note.author != request.user and not request.user.is_superuser:
         return  HttpResponseForbidden("Siz ancaq öz qeydlərinizi görə bilərsiniz")
     return render(request, 'notes/note_detail.html', {'note': note})
 
@@ -63,7 +66,7 @@ def note_create(request: HttpRequest) -> HttpResponse:
 @login_required
 def note_edit(request: HttpRequest, note_id:int) -> HttpResponse:
     note = get_object_or_404(Note, pk=note_id)
-    if request.user != note.author:
+    if request.user != note.author and not request.user.is_superuser:
         return HttpResponseForbidden("Siz ancaq öz qeydlərinizi dəyişə bilərsiniz")
     if request.method == 'POST':
         form = NoteForm(request.POST, instance=note)
@@ -81,7 +84,7 @@ def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:
         Note, pk=note_id
     )
 
-    if request.user != note.author:
+    if request.user != note.author and not request.user.is_superuser:
         return HttpResponseForbidden("Siz ancaq öz qeydlərinizi silə bilərsiniz")
 
     if request.method == 'POST':
