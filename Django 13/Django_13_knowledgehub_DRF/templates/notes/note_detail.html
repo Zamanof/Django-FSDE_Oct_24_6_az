@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ note.title }}
+{% endblock %}
+
+{% block content %}
+    <article class="card shadow-sm">
+        <div class="card-body p-4 p-lg-5">
+            <div class="note-detail-author mb-4">
+                <div class="note-detail-username">{{ note.author.username }}</div>
+                <div class="note-detail-date text-secondary">
+                    {{ note.created_at|date:"j F Y" }} · {{ note.created_at|time:"H:i" }}
+                </div>
+            </div>
+
+            <h1 class="note-detail-title mb-3">{{ note.title }}</h1>
+
+            <div class="note-detail-meta mb-2">
+                <span class="note-detail-meta-category">
+                    <i class="bi bi-bookmark-fill"></i>
+                    {{ note.category }}
+                </span>
+            </div>
+
+            <p class="note-detail-tags text-secondary mb-4">
+                {% for tag in note.tags.all %}
+                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Teq yoxdur
+                {% endfor %}
+            </p>
+
+            <div class="note-detail-content mb-4">
+                {{ note.content|linebreaks }}
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                <a
+                    class="btn btn-primary"
+                    href="{% url 'notes:note_edit' note.id %}"
+                >
+                    Dəyiş
+                </a>
+                <a
+                    class="btn btn-danger"
+                    href="{% url 'notes:note_delete' note.id %}"
+                >
+                    Sil
+                </a>
+                <a
+                    class="btn btn-outline-secondary"
+                    href="{% url 'notes:notes_list' %}"
+                >
+                    ← Qeydlər siyahısına qayıt
+                </a>
+            </div>
+        </div>
+    </article>
+{% endblock %}

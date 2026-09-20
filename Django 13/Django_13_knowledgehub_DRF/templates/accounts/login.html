@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Login
+{% endblock %}
+
+{% block content %}
+     <div class="card shadow-sm overflow-hidden">
+        <div class="row g-0">
+            <div class="col-lg-5 p-4 p-lg-5 auth-side">
+                <span class="badge rounded-pill badge-kicker mb-3">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Giriş
+                </span>
+                <h2 class="text-white">Yenidən xoş gəlmisiniz</h2>
+                <p class="text-white mb-0">Qeydləriniz sizi gözləyir — hesabınıza daxil olun.</p>
+            </div>
+            <div class="col-lg-7 p-4 p-lg-5">
+                <h1>
+                    Daxil ol
+                </h1>
+
+                {% include 'accounts/_auth_alerts.html' %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3{% if field.errors %} has-error{% endif %}">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex flex-wrap gap-2 pt-3 mt-3 border-top">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Daxil Ol
+                        </button>
+
+
+                        <a
+                            href="{% url 'home' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Ləğv et
+                        </a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+{% endblock %}
