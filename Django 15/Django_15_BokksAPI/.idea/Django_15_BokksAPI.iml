@@ -4,7 +4,11 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
-    <orderEntry type="jdk" jdkName="~\Documents\Django-FSDE_Oct_24_6_az\Django 14\Django_14_car_api\.venv" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="~\Documents\Django-FSDE_Oct_24_6_az\Django 15\Django_15_BokksAPI\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings" />
+  <component name="PyDocumentationSettings" />
+  <component name="ReSTService" />
+  <component name="TestRunnerService" />
 </module>
